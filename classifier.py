@@ -21,7 +21,7 @@ import numpy as np
 # (a**2).sum(axis=1) but does not create additional space.
 from numpy.core.umath_tests import inner1d
 from scipy import optimize
-from sklearn import metrics
+#from sklearn import metrics
 
 _FMIN = optimize.fmin_l_bfgs_b
 

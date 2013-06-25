@@ -22,7 +22,7 @@ def gemm(alpha, A, B, dtype=None, out=None):
     
     The returned matrix is designed to be C_CONTIGUOUS.
     '''
-    #from scipy.linalg.fblas import dgemm, sgemm
+    from scipy.linalg.blas import dgemm, sgemm
     if A.ndim != 2 or B.ndim != 2:
         raise TypeError, 'gemm only deals with 2-D matrices.'
     if dtype is None:
@@ -79,8 +79,7 @@ def dot(A, B, out=None):
     Raises:
         TypeError, if the type of matrices is wrong.
     '''
-    return np.dot(A,B)
-    #return gemm(1.0, A, B, out=out)
+    return gemm(1.0, A, B, out=out)
 
 
 def dot_image(image, B, out=None):
@@ -95,7 +94,8 @@ def dot_image(image, B, out=None):
         out = np.empty((np.prod(imshape[:-1]), B.shape[1]))
     else:
         out.resize((np.prod(imshape[:-1]), B.shape[1]))
-    out = np.dot(image.reshape((np.prod(imshape[:-1]), imshape[-1])), B)
+    out = gemm(1.0, image.reshape((np.prod(imshape[:-1]), imshape[-1])), B,
+                  out=out)
     out.resize(imshape[:-1] + (B.shape[1],))
     return out
 

@@ -5,7 +5,7 @@
 #include <cstring>
 #include <cmath>
 
-# include <omp.h>
+// # include <omp.h>
 
 #define MAXPOOL 0
 #define AVEPOOL 1
@@ -31,7 +31,7 @@ int fastpooling(
     
     switch (method) {
     case MAXPOOL:
-        #pragma omp parallel for
+      //    #pragma omp parallel for
         for (int k = 0; k < nchannels; ++k) {
             for (int i = 0; i < height; ++i) {
                 int h_id = i * gridh / height;
@@ -46,23 +46,23 @@ int fastpooling(
         } // loop over channels
         break;
     case AVEPOOL:
-        #pragma omp parallel for
+      //        #pragma omp parallel for
         for (int i = 0; i < height; ++i) {
             int h_id = i * gridh / height;
             for (int j = 0; j < width; ++j) {
                 int w_id = j * gridw / width;
                 const double* image_hw = image + (i * width + j) * nchannels;
                 double* output_hw = output + (h_id * gridw + w_id) * nchannels;
-                #pragma omp atomic
+		//              #pragma omp atomic
                 ++counts[h_id * gridw + w_id];
                 for (int k = 0; k < nchannels; ++k) {
-                    #pragma omp atomic
+                  //  #pragma omp atomic
                     output_hw[k] += image_hw[k];
                 } // loop over channels
             } // loop over width
         } // loop over height
         // Now, average
-        #pragma omp parallel for
+	// #pragma omp parallel for
         for (int i = 0; i < gridh * gridw; ++i) {
             int count = counts[i];
             for (int k = 0; k < nchannels; ++k) {
@@ -71,24 +71,24 @@ int fastpooling(
         }
         break;
     case RMSPOOL:
-        #pragma omp parallel for
+//#pragma omp parallel for
         for (int i = 0; i < height; ++i) {
             int h_id = i * gridh / height;
             for (int j = 0; j < width; ++j) {
                 int w_id = j * gridw / width;
                 const double* image_hw = image + (i * width + j) * nchannels;
                 double* output_hw = output + (h_id * gridw + w_id) * nchannels;
-                #pragma omp atomic
+		//    #pragma omp atomic
                 ++counts[h_id * gridw + w_id];
                 for (int k = 0; k < nchannels; ++k) {
                     double sqvalue = image_hw[k] * image_hw[k];
-                    #pragma omp atomic
+		    //  #pragma omp atomic
                     output_hw[k] += sqvalue;
                 } // loop over channels
             } // loop over width
         } // loop over height
         // Now, normalize
-        #pragma omp parallel for
+//   #pragma omp parallel for
         for (int i = 0; i < gridh * gridw; ++i) {
             int count = counts[i];
             for (int k = 0; k < nchannels; ++k) {

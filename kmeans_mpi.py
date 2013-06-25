@@ -16,8 +16,6 @@ The original copyright info is as follows.
 from iceberk import mpi
 import numpy as np
 import logging
-from sklearn import metrics
-
 
 def kmeans(X, k, n_init=1, max_iter=300, tol=1e-4):
     """ K-means clustering algorithm.

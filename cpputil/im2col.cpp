@@ -5,7 +5,7 @@
 #include <cstring>
 #include <cmath>
 
-#include <omp.h>
+//#include <omp.h>
 
 extern "C" {
 
@@ -21,7 +21,7 @@ void im2col(const double* imin,
     int step_out = pw * nchannels;
     int height_out = (height - ph) / stride + 1;
     int width_out = (width - pw) / stride + 1;
-#pragma omp parallel for
+    //#pragma omp parallel for
     for (int idxh = 0; idxh < height_out; ++idxh) {
         double* current = imout + idxh * width_out * ph * step_out;
         for (int idxw = 0; idxw < width_out; ++idxw) {

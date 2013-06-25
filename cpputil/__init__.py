@@ -9,8 +9,11 @@ from iceberk.mathutil import CHECK_IMAGE, CHECK_SHAPE
 
 # first, let's import the library
 try:
+    #_CPPUTIL = np.ctypeslib.load_library('libcpputil.so',
+    #        os.path.join(os.path.dirname(__file__), '_cpp'))
+    print os.path.join(os.path.dirname(__file__))
     _CPPUTIL = np.ctypeslib.load_library('libcpputil.so',
-            os.path.join(os.path.dirname(__file__), '_cpp'))
+            os.path.join(os.path.dirname(__file__)))
 except Exception, e:
     raise RuntimeError, "I cannot load libcpputil.so. please run make."
 

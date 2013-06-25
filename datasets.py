@@ -5,9 +5,7 @@ from iceberk import mpi
 import logging
 import numpy as np
 import os
-from PIL import Image
 from scipy import misc
-from skimage import transform
 
 
 def imread_rgb(fname):

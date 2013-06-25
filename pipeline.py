@@ -5,14 +5,12 @@ nchannels numpy matrix of np.float64, , which is always preserved as a
 contiguous array in C-order so we can more efficiently solve most of the
 problems.
 """
-from iceberk import cpputil, mathutil, mpi, util
+from iceberk import mathutil, mpi, util
 from iceberk import kmeans_mpi, omp_mpi, omp_n_mpi
 from iceberk import datasets
 import logging
 from mathutil import CHECK_IMAGE, CHECK_SHAPE
 import numpy as np
-from PIL import Image
-from sklearn import metrics
 
 # we try to import bottleneck: this helps computing the nearest neighbors in 
 # LLC faster. Otherwise, we will simply use np.argsort.

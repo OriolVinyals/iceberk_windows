@@ -5,7 +5,7 @@ nchannels numpy matrix of np.float64, , which is always preserved as a
 contiguous array in C-order so we can more efficiently solve most of the
 problems.
 """
-from iceberk import mathutil, mpi, util
+from iceberk import mathutil, mpi, util, cpputil
 from iceberk import kmeans_mpi, omp_mpi, omp_n_mpi
 from iceberk import datasets
 import logging

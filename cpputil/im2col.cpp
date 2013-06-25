@@ -5,11 +5,21 @@
 #include <cstring>
 #include <cmath>
 
+#ifdef FOO_DLL
+#ifdef FOO_EXPORTS
+#define FOO_API __declspec(dllexport)
+#else
+#define FOO_API __declspec(dllimport)
+#endif /* FOO_EXPORTS */
+#else
+#define FOO_API extern /* XXX confirm this */
+#endif /* FOO_DLL */
+
 //#include <omp.h>
 
 extern "C" {
 
-void im2col(const double* imin,
+FOO_API void im2col(const double* imin,
             const int* imsize,
             const int* psize,
             const int stride,

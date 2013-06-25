@@ -8,11 +8,14 @@ from iceberk import mpi
 from iceberk.mathutil import CHECK_IMAGE, CHECK_SHAPE
 
 # first, let's import the library
+#folder = os.path.dirname(os.path.abspath(__file__))
+#dll_path = os.path.join(folder, "cpputil.dll")    
+#TEST = ct.CDLL(dll_path)
 try:
     #_CPPUTIL = np.ctypeslib.load_library('libcpputil.so',
     #        os.path.join(os.path.dirname(__file__), '_cpp'))
     print os.path.join(os.path.dirname(__file__))
-    _CPPUTIL = np.ctypeslib.load_library('libcpputil.so',
+    _CPPUTIL = np.ctypeslib.load_library('cpputil',
             os.path.join(os.path.dirname(__file__)))
 except Exception, e:
     raise RuntimeError, "I cannot load libcpputil.so. please run make."

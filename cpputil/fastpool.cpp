@@ -11,9 +11,19 @@
 #define AVEPOOL 1
 #define RMSPOOL 2
 
+#ifdef FOO_DLL
+#ifdef FOO_EXPORTS
+#define FOO_API __declspec(dllexport)
+#else
+#define FOO_API __declspec(dllimport)
+#endif /* FOO_EXPORTS */
+#else
+#define FOO_API extern /* XXX confirm this */
+#endif /* FOO_DLL */
+
 extern "C" {
 
-int fastpooling(
+FOO_API int fastpooling(
         const double* const image, // Input image, [height*width*nchannels]
         const int height, 
         const int width,
@@ -106,7 +116,7 @@ int fastpooling(
 }
 
 
-int fast_oc_pooling(
+FOO_API int fast_oc_pooling(
         const double* const image, // Input image, [gridh*gridw*nchannels]
         const int gridh, // The grid size along the height
         const int gridw, // The grid size along the width

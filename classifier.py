@@ -603,9 +603,9 @@ class Evaluator(object):
             labels.
         """
         if pred.ndim == 2:
-            pred = pred.argmax(axis=1)
+            pred = pred.argmax(axis=1).squeeze()
         if Y.ndim == 2:
-            Y = Y.argmax(axis=1)
+            Y = Y.argmax(axis=1).squeeze()
         correct = mpi.COMM.allreduce((Y==pred).sum())
         num_data = mpi.COMM.allreduce(len(Y))
         return float(correct) / num_data

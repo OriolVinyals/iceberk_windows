@@ -418,7 +418,8 @@ def mpi_meanstd(data):
     # and addition.
     try:
         data_centered = data - m
-        data_centered **= 2
+        data_centered = np.power(data_centered, 2)
+        #data_centered **= 2
         std_local = data_centered.sum(0)
         std_local_computed = 1
     except MemoryError:
@@ -433,7 +434,8 @@ def mpi_meanstd(data):
         for start in range(0, data.shape[0], minibatch):
             end = min(data.shape[0], start + minibatch)
             data_batch[:end-start] = data[start:end] - m
-            data_batch **= 2
+            data_batch = np.power(data_batch, 2)
+            #data_batch **= 2
             std_local += data_batch.sum(axis=0)
     std = np.empty_like(std_local)
     mpi.COMM.Allreduce(std_local, std)
